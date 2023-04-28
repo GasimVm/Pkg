@@ -1,0 +1,13 @@
+﻿{
+  "Descriptor": {
+    "UId": "ce5aeed7-0682-490f-8bc5-4cd0e90359db",
+    "Name": "UsrEstate1Page",
+    "ModifiedOnUtc": "\/Date(1682685302000)\/",
+    "Parent": {
+      "UId": "d62293c0-7f14-44b1-b547-735fb40499cd",
+      "Name": "BaseModulePageV2"
+    },
+    "ManagerName": "ClientUnitSchemaManager",
+    "Caption": "Edit page: \"Недвижимость\""
+  }
+}

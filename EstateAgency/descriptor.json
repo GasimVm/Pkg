@@ -1,0 +1,15 @@
+﻿{
+  "Descriptor": {
+    "UId": "2dd4b3b0-1346-0028-a3dd-3651568adef3",
+    "Name": "EstateAgency",
+    "ModifiedOnUtc": "\/Date(1682684320000)\/",
+    "Maintainer": "Customer",
+    "DependsOn": [
+      {
+        "UId": "2fabaf6c-0f92-4530-aef8-40345c021da2",
+        "PackageVersion": "7.8.0",
+        "Name": "ProductCore"
+      }
+    ]
+  }
+}

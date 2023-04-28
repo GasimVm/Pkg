@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Culture="en-US">
+	<Group Type="String">
+		<Items>
+			<Item Name="Caption" Value="Недвижимость in Folder" />
+			<Item Name="Columns.Folder.Caption" Value="Недвижимость folder" />
+			<Item Name="Columns.UsrEstate.Caption" Value="Недвижимость" />
+		</Items>
+	</Group>
+</Resources>

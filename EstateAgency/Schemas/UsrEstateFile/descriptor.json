@@ -1,0 +1,13 @@
+﻿{
+  "Descriptor": {
+    "UId": "a13d4f63-0667-4adc-8fea-347b24d44398",
+    "Name": "UsrEstateFile",
+    "ModifiedOnUtc": "\/Date(1682685325000)\/",
+    "Parent": {
+      "UId": "556c5867-60a7-4456-aae1-a57a122bef70",
+      "Name": "File"
+    },
+    "ManagerName": "EntitySchemaManager",
+    "Caption": "Недвижимость attachment"
+  }
+}

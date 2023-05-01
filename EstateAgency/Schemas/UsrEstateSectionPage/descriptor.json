@@ -1,0 +1,13 @@
+﻿{
+  "Descriptor": {
+    "UId": "08904427-781c-4df5-9c23-339128cbe947",
+    "Name": "UsrEstateSectionPage",
+    "ModifiedOnUtc": "\/Date(1682798535000)\/",
+    "Parent": {
+      "UId": "7912fb69-4fee-429f-8b23-93943c35d66d",
+      "Name": "BaseSectionV2"
+    },
+    "ManagerName": "ClientUnitSchemaManager",
+    "Caption": "Схема раздела: \"Недвижимость\""
+  }
+}

@@ -1,0 +1,13 @@
+﻿{
+  "Descriptor": {
+    "UId": "661c4cd2-3974-49f8-9784-5e4c515cf4c3",
+    "Name": "UsrEsateViewDetail",
+    "ModifiedOnUtc": "\/Date(1682791240000)\/",
+    "Parent": {
+      "UId": "1bab9dcf-17d5-49f8-9536-8e0064f1dce0",
+      "Name": "BaseEntity"
+    },
+    "ManagerName": "EntitySchemaManager",
+    "Caption": "Просмотр недвижимости"
+  }
+}

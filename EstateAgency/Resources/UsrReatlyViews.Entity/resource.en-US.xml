@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Culture="en-US">
+	<Group Type="String">
+		<Items>
+			<Item Name="Caption" Value="Просмотры недвижимости" />
+			<Item Name="Columns.UsrAccount.Caption" Value="Потенциальный клиент" />
+			<Item Name="Columns.UsrComment.Caption" Value="Комментарий" />
+			<Item Name="Columns.UsrContact.Caption" Value="Ответственный" />
+			<Item Name="Columns.UsrDate.Caption" Value="Дата-время просмотра" />
+			<Item Name="Columns.UsrEstate.Caption" Value="Недвижимость" />
+		</Items>
+	</Group>
+</Resources>

@@ -1,7 +1,31 @@
-define("UsrEstate1Page", [], function() {
+define("UsrEstate1Page", ["ProcessModuleUtilities","UsrConstsJs"], function(ProcessModuleUtilities,UsrConstsJs) {
+	const abConstants = UsrConstsJs.getAllConstant();
 	return {
 		entitySchemaName: "UsrEstate",
-		attributes: {},
+		attributes: {
+			"UsrCommissionsPrice": {
+				"dependencies": [
+					{
+						"columns": ["UsrPrice"],
+						"methodName": "onCommissions"
+					}
+				]
+			},
+			"UsrCommissionsTypeOffer": {
+				"dependencies": [
+					{
+						"columns": ["UsrTypeOffer"],
+						"methodName": "onCommissions"
+					}
+				]
+			},
+		},
+		messages: {
+                "CreateReatlyViews": {
+                    "mode": Terrasoft.MessageMode.BROADCAST,
+                    "direction": Terrasoft.MessageDirectionType.SUBSCRIBE
+                }
+		},
 		modules: /**SCHEMA_MODULES*/{}/**SCHEMA_MODULES*/,
 		details: /**SCHEMA_DETAILS*/{
 			"Files": {
@@ -11,15 +35,94 @@ define("UsrEstate1Page", [], function() {
 					"masterColumn": "Id",
 					"detailColumn": "UsrEstate"
 				}
+			},
+			"UsrReatlyDetail": {
+				"schemaName": "UsrSchema975ea63aDetail",
+				"entitySchemaName": "UsrReatlyViews",
+				"filter": {
+					"detailColumn": "UsrEstate",
+					"masterColumn": "Id"
+				}
 			}
 		}/**SCHEMA_DETAILS*/,
 		businessRules: /**SCHEMA_BUSINESS_RULES*/{}/**SCHEMA_BUSINESS_RULES*/,
-		methods: {},
+		methods: {
+			 
+			onCommissions:function(){
+				var price = this.get ("UsrPrice");
+				var typeOffer =  (this.$UsrTypeOffer || {}).value;
+				var commissions=0;
+				if(typeOffer==abConstants.OfferType.Rent){
+					  commissions=price*abConstants.Commissions.Rent;
+				}else{
+					commissions=price*abConstants.Commissions.Sale;
+				}
+				this.set("UsrCommissions",commissions)
+
+			},
+			IsLessPrice:function(){
+				if(this.get("UsrPrice")>100000){
+					return true;
+				}
+				return false;
+			},
+			setValidationConfig: function () {
+				this.callParent (arguments);
+				this.addColumnValidator ("UsrPrice", this.priceValidator);
+				this.addColumnValidator ("UsrSquare", this.priceValidator);
+
+			},
+				priceValidator: function () {
+				var invalidMessage = "";
+				var price = this.get ("UsrPrice");
+				var square = this.get ("UsrSquare");
+				 
+				if (price <= 0 || square<=0) {
+				invalidMessage = this.get ("Resources.Strings.InvalidateValue");
+				}
+				return {
+				invalidMessage: invalidMessage
+				};
+			},
+			createReatlyViews: function() {
+				var  reatlyId= this.get("Id");
+                var args = {
+                  sysProcessName: "UsrCreateReatlyViews",
+                  parameters: {
+					UsrReatlyId: reatlyId,
+					}
+                 };
+                ProcessModuleUtilities.executeProcess(args);
+				 
+            },
+			getActions: function() {
+                var actionMenuItems = this.callParent(arguments);
+                actionMenuItems.addItem(this.getButtonMenuItem({
+                 Type: "Terrasoft.MenuSeparator",
+                 Caption: ""
+                }));
+                 
+                actionMenuItems.addItem(this.getButtonMenuItem({
+                 "Caption": {bindTo: "Resources.Strings.UsrAvtoAddReatlyView"},
+                 "Tag": "createReatlyViews",
+                 "Enabled":true
+                }));
+				
+                return actionMenuItems;
+            },
+			init: function() {
+				this.callParent(arguments);
+				this.sandbox.subscribe("CreateReatlyViews", this.onMyCreateReatlyViews, this);
+			},
+			onMyCreateReatlyViews: function(args) {
+				this.reloadEntity();
+			}
+		},
 		dataModels: /**SCHEMA_DATA_MODELS*/{}/**SCHEMA_DATA_MODELS*/,
 		diff: /**SCHEMA_DIFF*/[
 			{
 				"operation": "insert",
-				"name": "UsrNameb3709a77-1bd0-4a01-9605-908a1835bbfc",
+				"name": "UsrName",
 				"values": {
 					"layout": {
 						"colSpan": 24,
@@ -37,7 +140,7 @@ define("UsrEstate1Page", [], function() {
 			},
 			{
 				"operation": "insert",
-				"name": "FLOATad7beaa2-b121-43d7-954a-9f29634c0150",
+				"name": "UsrPrice",
 				"values": {
 					"layout": {
 						"colSpan": 24,
@@ -55,7 +158,7 @@ define("UsrEstate1Page", [], function() {
 			},
 			{
 				"operation": "insert",
-				"name": "FLOAT12332eb1-1c43-4606-8a15-6f6f259cb395",
+				"name": "UsrSquare",
 				"values": {
 					"layout": {
 						"colSpan": 24,
@@ -73,7 +176,7 @@ define("UsrEstate1Page", [], function() {
 			},
 			{
 				"operation": "insert",
-				"name": "LOOKUP972758ff-e4f0-4646-92b4-75549dc7bfc1",
+				"name": "UsrType",
 				"values": {
 					"layout": {
 						"colSpan": 24,
@@ -92,7 +195,7 @@ define("UsrEstate1Page", [], function() {
 			},
 			{
 				"operation": "insert",
-				"name": "STRING96cb60a5-c641-4ac9-87ad-37f9f38c005a",
+				"name": "UsrTypeOffer",
 				"values": {
 					"layout": {
 						"colSpan": 24,
@@ -101,8 +204,7 @@ define("UsrEstate1Page", [], function() {
 						"row": 4,
 						"layoutName": "ProfileContainer"
 					},
-					"bindTo": "UsrComment",
-					"enabled": true
+					"bindTo": "UsrTypeOffer"
 				},
 				"parentName": "ProfileContainer",
 				"propertyName": "items",
@@ -110,20 +212,47 @@ define("UsrEstate1Page", [], function() {
 			},
 			{
 				"operation": "insert",
-				"name": "LOOKUPb9811606-0a44-4b7a-966d-29949357e97f",
+				"name": "UsrComment",
 				"values": {
 					"layout": {
-						"colSpan": 12,
+						"colSpan": 24,
 						"rowSpan": 1,
 						"column": 0,
-						"row": 0,
-						"layoutName": "Header"
+						"row": 5,
+						"layoutName": "ProfileContainer"
 					},
-					"bindTo": "UsrTypeOffer",
+					"bindTo": "UsrComment",
 					"enabled": true,
-					"contentType": 3
+					"isRequired": {
+						"bindTo": "IsLessPrice"
+					}
 				},
-				"parentName": "Header",
+				"parentName": "ProfileContainer",
+				"propertyName": "items",
+				"index": 5
+			},
+			{
+				"operation": "insert",
+				"name": "GeneralInfoTab",
+				"values": {
+					"caption": {
+						"bindTo": "Resources.Strings.GeneralInfoTabCaption"
+					},
+					"items": [],
+					"order": 0
+				},
+				"parentName": "Tabs",
+				"propertyName": "tabs",
+				"index": 0
+			},
+			{
+				"operation": "insert",
+				"name": "UsrReatlyDetail",
+				"values": {
+					"itemType": 2,
+					"markerValue": "added-detail"
+				},
+				"parentName": "GeneralInfoTab",
 				"propertyName": "items",
 				"index": 0
 			},
@@ -135,11 +264,11 @@ define("UsrEstate1Page", [], function() {
 						"bindTo": "Resources.Strings.NotesAndFilesTabCaption"
 					},
 					"items": [],
-					"order": 0
+					"order": 1
 				},
 				"parentName": "Tabs",
 				"propertyName": "tabs",
-				"index": 0
+				"index": 1
 			},
 			{
 				"operation": "insert",
@@ -197,9 +326,27 @@ define("UsrEstate1Page", [], function() {
 				"operation": "merge",
 				"name": "ESNTab",
 				"values": {
-					"order": 1
+					"order": 2
 				}
-			}
+			},
+			{
+				"operation": "insert",
+				"name": "UsrCommissions",
+				"values": {
+					"layout": {
+						"colSpan": 24,
+						"rowSpan": 1,
+						"column": 0,
+						"row": 6,
+						"layoutName": "ProfileContainer"
+					},
+					"bindTo": "UsrCommissions",
+					"enabled": false,
+				},
+				"parentName": "ProfileContainer",
+				"propertyName": "items",
+				"index": 6
+			},
 		]/**SCHEMA_DIFF*/
 	};
 });

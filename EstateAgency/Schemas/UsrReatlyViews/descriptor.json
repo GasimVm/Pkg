@@ -1,0 +1,13 @@
+﻿{
+  "Descriptor": {
+    "UId": "4c1df1ca-c655-4f40-8e6b-41374da518f2",
+    "Name": "UsrReatlyViews",
+    "ModifiedOnUtc": "\/Date(1682790241000)\/",
+    "Parent": {
+      "UId": "1bab9dcf-17d5-49f8-9536-8e0064f1dce0",
+      "Name": "BaseEntity"
+    },
+    "ManagerName": "EntitySchemaManager",
+    "Caption": "Просмотры недвижимости"
+  }
+}

@@ -1,0 +1,13 @@
+﻿{
+  "Descriptor": {
+    "UId": "85103e2a-1b5d-4daf-ab64-b7f627c7afea",
+    "Name": "UsrUsrReatlyViewsa0d81be0Page",
+    "ModifiedOnUtc": "\/Date(1682798426000)\/",
+    "Parent": {
+      "UId": "d3cc497c-f286-4f13-99c1-751c468733c0",
+      "Name": "BasePageV2"
+    },
+    "ManagerName": "ClientUnitSchemaManager",
+    "Caption": "Карточка схемы: \"Просмотры недвижимости\""
+  }
+}

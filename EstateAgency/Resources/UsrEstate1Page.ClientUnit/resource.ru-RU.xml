@@ -3,6 +3,9 @@
 	<Group Type="String">
 		<Items>
 			<Item Name="Caption" Value="Edit page: &quot;Недвижимость&quot;" />
+			<Item Name="LocalizableStrings.InvalidateValue.Value" Value="Значение должна быть больше нуля" />
+			<Item Name="LocalizableStrings.UsrAvtoAddReatlyView.Value" Value="Aвтоматического создания записей на детали " />
+			<Item Name="LocalizableStrings.UsrReatlyDetailDetailCaptionOnPage.Value" Value="Просмотры недвижимости" />
 		</Items>
 	</Group>
 </Resources>
